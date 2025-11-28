@@ -22,8 +22,7 @@ sudo apt update -y && sudo apt upgrade -y
 Run the following command to download and store the GPG key used to validate Wazuh packages:
 
 ```bash
-curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH \
-    | sudo gpg --dearmor -o /usr/share/keyrings/wazuh-archive-keyring.gpg
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo gpg --dearmor -o /usr/share/keyrings/wazuh-archive-keyring.gpg
 ```
 
 This securely adds the GPG key to your system.
