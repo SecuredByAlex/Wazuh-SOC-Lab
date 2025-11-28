@@ -1,183 +1,88 @@
-# Wazuh Manager Installation (Ubuntu Server)
+# Wazuh Server Installation (Ubuntu)
 
-> **Purpose:** This guide provides step-by-step instructions to install and configure Wazuh Manager, Indexer, and Dashboard on an Ubuntu Server.
-> **Applies to:** Ubuntu 20.04 / 22.04 LTS
+This document describes how to install the **Wazuh Server** on an Ubuntu VirtualBox machine using the official Wazuh installation script.
 
 ---
 
-## 🚀 Prerequisites
+## 🧰 1. Prerequisites
 
-| Requirement | Details                       |
-| ----------- | ----------------------------- |
-| OS          | Ubuntu Server 20.04 or 22.04  |
-| RAM         | Minimum 4GB (8GB recommended) |
-| Storage     | 20GB+                         |
-| Access      | Root or sudo privileges       |
-| Network     | Internet connection required  |
+Ensure your Ubuntu VM meets the following:
 
-### **Update System Packages**
+- 64-bit Ubuntu OS (20.04 / 22.04 / 24.04 recommended)
+- Internet connectivity  
+- Sudo privileges  
+- Updated system:
 
 ```bash
 sudo apt update -y && sudo apt upgrade -y
 ```
 
-### **Install Required Dependencies**
+## 🔐 2. Add the Wazuh GPG Key
+
+Run the following command to download and store the GPG key used to validate Wazuh packages:
 
 ```bash
-sudo apt install curl lsb-release gnupg apt-transport-https unzip -y
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH \
+    | sudo gpg --dearmor -o /usr/share/keyrings/wazuh-archive-keyring.gpg
 ```
 
----
+This securely adds the GPG key to your system.
 
-## 🏗 Step 1: Add Wazuh Repository
+## 📦 3. Download & Run the Wazuh Installation Script
+
+Download the official Wazuh installer and run it:
 
 ```bash
-curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | sudo apt-key add -
-echo "deb https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee /etc/apt/sources.list.d/wazuh.list
-sudo apt update
+curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a -i
 ```
 
----
+Explanation of flags:
 
-## 📦 Step 2: Install Wazuh Indexer
+  -  -a → Installs all components:
+
+       - Wazuh Manager
+       - Wazuh Indexer
+       - Wazuh Dashboard
+
+  -  -i → Runs in interactive mode (lets you confirm steps)
+
+What the installer will do:
+
+    - Configure repositories
+    - Install all required services
+    - Generate TLS certificates
+    - Set up the indexer cluster (single-node by default)
+    - Install and configure the dashboard
+
+ss: username and pass
+## 🚀 4. Start and Verify Wazuh Services
+
+Run the following commands to confirm that the services are active:
 
 ```bash
-sudo apt install wazuh-indexer -y
-```
-
-### Start and Enable Service
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable wazuh-indexer
-sudo systemctl start wazuh-indexer
-```
-
-> **📌 Screenshot Placeholder:** *Indexer installed successfully*
-
----
-
-## 🔧 Step 3: Configure Indexer (Basic Setup)
-
-> The full configuration is stored in `indexer.yml` (added separately in repo)
-
-Restart service after editing configuration:
-
-```bash
-sudo systemctl restart wazuh-indexer
-```
-
----
-
-## 🛡 Step 4: Install Wazuh Manager
-
-```bash
-sudo apt install wazuh-manager -y
-```
-
-Start service:
-
-```bash
-sudo systemctl enable wazuh-manager
-sudo systemctl start wazuh-manager
-```
-
-> **📌 Screenshot Placeholder:** *Manager service running*
-
----
-
-## 🌐 Step 5: Install Wazuh Dashboard
-
-```bash
-sudo apt install wazuh-dashboard -y
-sudo systemctl enable wazuh-dashboard
-sudo systemctl start wazuh-dashboard
-```
-
-> **📌 Screenshot Placeholder:** *Dashboard installation and login*
-
----
-
-## 🔑 Step 6: Access the Dashboard
-
-Open browser:
-
-```
-https://<server-ip>:5601
-```
-
-Default login (if not changed):
-
-```
-user: admin
-pass: admin
-```
-
-⚠ Change password after first login.
-
-> **📌 Screenshot Placeholder:** *Dashboard home screen*
-
----
-
-## 🧪 Step 7: Verify Services
-
-```bash
-sudo systemctl status wazuh-indexer
 sudo systemctl status wazuh-manager
+sudo systemctl status wazuh-indexer
 sudo systemctl status wazuh-dashboard
 ```
 
-> **📌 Screenshot Placeholder:** *Service status output*
+All services should show active (running).
 
----
 
-## 🤝 Step 8: Add an Agent (Example - Windows)
+## 🌐 5. Access Wazuh Dashboard
 
-```bash
-/var/ossec/bin/manage_agents
-```
+Open your browser and visit:
 
-Select `Add agent`, generate key, copy it to the endpoint.
+https://<your-ubuntu-ip>:5601
 
-> Detailed agent setup files are stored in:
+Default credentials are shown at the end of the installation script.
 
-```
-/setup/windows-agent/
-/setup/kali-agent/
-```
+📸 Screenshot placeholder: Wazuh Dashboard login page.
+## 🎯 6. Installation Completed
 
-> **📌 Screenshot Placeholder:** *Agent enrollment process*
+Your Ubuntu server now has a fully functioning:
 
----
+   - Wazuh Manager
 
-## ✔ Final Validation Checklist
+   - Wazuh Indexer
 
-| Task                  | Status |
-| --------------------- | ------ |
-| Wazuh Indexer running | 🔲     |
-| Wazuh Manager running | 🔲     |
-| Dashboard accessible  | 🔲     |
-| Agent enrolled        | 🔲     |
-| Alerts visible        | 🔲     |
-
----
-
-## 📁 Related Files
-
-| File                  | Purpose                          |
-| --------------------- | -------------------------------- |
-| `ossec.conf`          | Core Wazuh manager config        |
-| `indexer.yml`         | Indexer storage + cluster config |
-| `dashboards-setup.md` | Custom dashboards setup          |
-
----
-
-## 📝 Notes
-
-* For production, enable SSL and configure authentication.
-* Ensure sufficient RAM for indexing logs.
-* Backup configuration files before upgrades.
-
----
-
-*End of installation guide.*
+   - Wazuh Dashboard
