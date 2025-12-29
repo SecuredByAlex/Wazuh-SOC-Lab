@@ -75,7 +75,7 @@ All services should show active (running).
 
 Open your browser and visit:
 
-https://10.0.2.15/
+https://192.168.0.108/
 
 Default credentials are shown at the end of the installation script.
 

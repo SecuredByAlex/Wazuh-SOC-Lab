@@ -1,87 +1,84 @@
-# 🪟 Wazuh Windows Agent Installation & Registration (GUI)
+# Wazuh Agent Installation (Windows)
 
-Agent OS: Windows 10 Pro
-Wazuh Manager (Ubuntu) IP: 192.168.0.107
-Manager Configuration: Ubuntu server already has Wazuh Manager, Indexer, and Dashboard installed.
+This document describes how to install the *Wazuh Agent* on a Windows machine and connect it to your Ubuntu Wazuh Server using the official deployment method.
 
+---
 
-## 📥 1. Download the Windows Agent
+## 🧰 1. Prerequisites
 
-Open a browser on Windows.
+Ensure your Windows machine meets the following:
 
-Download the latest Wazuh Windows agent MSI from the official source:
-```URL
-https://packages.wazuh.com/4.x/windows/wazuh-agent-4.x.x.msi
+- Windows OS (Windows 10)
+- Administrator privileges (for PowerShell)
+- Network connectivity to the Wazuh Server (192.168.0.108)
+- PowerShell 5.0 or higher
+
+---
+
+## 🔐 2. Generate the Installation Command
+
+On your Wazuh Server Dashboard, you need to generate the unique installation script that links the agent to your manager.
+
+1.  Log in to the *Wazuh Dashboard* (https://192.168.0.108/).  
+2.  Click *Deploy new agent*.
+3.  Select *Windows* as the Operating System.
+4.  Enter the *Wazuh Server IP*: 10.0.2.15
+5.  Assign a group (Default: default).
+
+This will generate a specific PowerShell command at the bottom of the page. *Copy this command.*
+
+---
+
+## 📦 3. Install the Agent via PowerShell
+
+On the Windows machine, open PowerShell with administrative rights and run the command generated in the previous step.
+
+1.  Search for *PowerShell* in the Start menu.
+2.  Right-click and select *Run as Administrator*.
+3.  Paste and run the installation command:
+
+```powershell
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.12.0-1.msi -OutFile $env:tmp\wazuh-agent; msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='192.168.0.108' WAZUH_AGENT_GROUP='default' WAZUH_AGENT_NAME='windows10-agent' 
 ```
-📸 Screenshot placeholder: Browser showing download
-📸 Screenshot placeholder: File Explorer showing .msi downloaded
+//ss for powershell start finish.
 
-## 🛠️ 2. Start GUI Installer
+(Note: Use the specific command copied from your dashboard, as it contains your unique Manager IP and encryption keys.)
+What the script will do:
+<ol>
+<li> Download the Wazuh Agent MSI package </li>
+<li> Install the Wazuh Agent service </li>
+<li> Configure the agent to talk to 192.168.0.108 </li>
+<li> Register the agent with the manager </li>
+</ol>
 
-Navigate to the .msi file.
+---
 
-Double-click to open the Wazuh Setup Wizard.
-Accept the T&C checkbox and click Install.
-After the Installation, Click on finish and run the "Wazuh Agent".
+## 🚀 4. Start the Wazuh Agent Service
 
-## 🧩 3. Create the Agent on the Ubuntu Manager & Extract Registration Key
+Once the installation command finishes, you must manually start the service. Run the following command in the same Administrator PowerShell window:
 
-Before connecting the Windows agent, the agent must be registered on the manager:
-
-On the Ubuntu Wazuh server, create a new agent entry:
-
-```bash
-sudo /var/ossec/bin/manage_agents
+```powershell
+NET START Wazuh
 ```
+You should see a message indicating the specific service was started successfully.
 
-Select (A)dd agent.
+---
 
-Enter the agent name (e.g., Windows-Agent).
+## 🌐 5. Verify Connection
 
-Enter the IP address of the agent (Windows machine).
+Return to your Wazuh Dashboard to confirm the agent is online.
+ * Navigate back to the Agents tab.
+ * Refresh the list.
+ * Your Windows machine should appear in the list with status Active.
+All checks should show the agent is communicating with the manager.
 
-Copy the generated key shown at the end. This key will be used on Windows to authenticate with the manager.
+---
 
-Example output:
+## 🎯 6. Installation Completed
 
-Agent information:
-   ID: 001
-   Name: Windows-Agent1
-   IP: 192.168.0.108
-   Key: qwerty12345abcdefghijklmnopqrstuvwxyz
+Your Windows machine now has a fully functioning:
+ * Wazuh Agent Service
+ * Real-time Log Collection
+ * Threat Detection Capabilities
 
-
-📸 Screenshot placeholder: Terminal showing generated key
-
-## 🌐 4. Configure Manager Connection in GUI Installer
-
-During installation on Windows:
-
-Enter Wazuh Manager IP: 192.168.0.107
-
-Paste the registration key copied from Ubuntu manager into the appropriate field.
-
-Click onn save, then restart the wazuh agent.
-
-The Restart will save the changes and connect the agent with the manger.
-
-📸 Screenshot placeholder: Installer page with Manager IP and registration key
-
-📸 Screenshot placeholder: Windows Services showing Wazuh Agent running
-
-
-## 🖥️ 5. Confirm Agent on Wazuh Dashboard
-
-Open browser → https://192.168.0.107/
-
-Navigate to Agents → Agent List
-
-Confirm the Windows agent is listed as:
-
-Active
-
-Last Keepalive recent
-
-Correct name and group
-
-📸 Screenshot placeholder: Wazuh Dashboard showing Windows agent
+ ---
