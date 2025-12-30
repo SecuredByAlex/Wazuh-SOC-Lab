@@ -68,9 +68,10 @@ NET START Wazuh
 ```
 You should see a message indicating the specific service was started successfully.
 
----
 <br>
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/f75d7fac-6e8e-44dc-bf8e-98a2b7bc8bb5" /><br>
+
+---
 
 ## 🌐 5. Verify Connection
 
