@@ -21,13 +21,14 @@ sudo apt update -y
 ## 🔐 2. Generate the Installation Command
 
 On your Wazuh Server Dashboard, you need to generate the installation script.
- * Log in to the Wazuh Dashboard (https://192.168.0.108/).
- * Click the Wazuh menu icon (▼) and select Agents.
- * Click Deploy new agent.
- * Select Debian/Ubuntu as the Operating System (Kali is Debian-based).
- * Enter the Wazuh Server IP: 192.168.0.108
- * Assign a group (Default: default).
-
+ * Log in to the Wazuh Dashboard (https://192.168.0.108/).<br>
+ * Click Deploy new agent.<br>
+   <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/6dd484bc-18ef-40d4-979e-4eb2413c4b5e" />
+ * Select Debian/Ubuntu as the Operating System (Kali is Debian-based).<br>
+ * Enter the Wazuh Server IP: 192.168.0.108<br>
+ * Assign a group (Default: default).<br>
+   <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/97448286-17ff-4752-9887-ebf027a06846" /><br>
+   <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/657d6dd7-a65b-4996-a451-a7e73f0cdc62" /><br>
  This will generate a command string at the bottom. Copy this command.
 
 ---
@@ -39,7 +40,9 @@ On your Kali Linux machine, open your terminal and paste the command you generat
 ```bash
 wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.12.0-1_amd64.deb && sudo WAZUH_MANAGER='192.168.0.108' WAZUH_AGENT_GROUP='default' WAZUH_AGENT_NAME='Kali-agent' dpkg -i ./wazuh-agent_4.12.0-1_amd64.deb
 ```
-//ss
+<br>
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/a5c986ce-c666-4b70-9546-df52d031381e" />
+<br>
 
 (Note: Use the specific command copied from your dashboard, as it contains your unique Manager IP and encryption keys.)
 What the script will do:
@@ -61,7 +64,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable wazuh-agent
 sudo systemctl start wazuh-agent
 ```
-//ss
+<br> <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/6389b638-7b3f-4ce7-9fdc-1fe1aa00fcec" /> <br>
 
 ---
 
@@ -73,7 +76,7 @@ Return to your Wazuh Dashboard to confirm the agent is online.
  * Your Kali machine should appear in the list with status Active.
 All checks should show the agent is communicating with the manager.
 
-
+<br> <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/9dde3cff-01c5-46d5-99dc-54a3d861ad39" /> <br>
 ---
 
 # 🎯 6. Installation Completed
