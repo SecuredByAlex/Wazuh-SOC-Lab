@@ -1,5 +1,5 @@
 # 📂 Lab 1: File Integrity Monitoring (Windows Agent)
-*Goal:* Detect unauthorized file creation on the Administrator's Desktop in real-time.
+*Goal:* Detect file creation on the Desktop Folder in real-time.
 
 ---
 
@@ -54,14 +54,17 @@ Configure the Windows Agent to watch a specific user folder.
 3.  *Add the Directory to Monitor:*
     * Locate the <syscheck> section.
     * Add the line below (Replace YourUserName with your actual Windows user, e.g., Admin):
-    xml
+    ```bash
     <directories check_all="yes" report_changes="yes" realtime="yes">C:\File Integrity</directories>
+    ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/e7eaf272-3b3f-4827-b71b-ae075ed01e1c" />
     
 4.  *Save the file.*
 5.  *Restart the Wazuh Service:*
     * Open Wazuh Agent -> Manage Tab -> Restart
-    
-    
+
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/a986ba86-4ea2-4971-8a9d-30303d5a035e" /><br>
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/5c52c3d7-d62e-43b8-ae90-6abfece60bd4" />
 
 ---
 
@@ -72,10 +75,14 @@ Trigger the alert and verify it on the Dashboard.
     * Go to your File integrity Folder.
     * Right-click > New > *Text Document*.
     * Name it: stolen_passwords.txt.
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/9232ff90-32ff-437b-8a0b-2d77dac8f1c7" />  <br>
+
 2.  *Check Wazuh Dashboard:*
     * Navigate to *Modules > Security Events*.
     * Search for *Rule ID: 554* (File added).
     * *Result:* You should see an alert with the description:
         > *"File added to the system"*
-        > * *File:* C:\Users\YourUserName\Desktop\stolen_passwords.txt
+        > * *File:* C:\File Integrity\stolen_passwords.txt
         > * *Agent:* Windows-10-Agent
+        
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/dd3e8f1a-9c63-4df9-b5c5-21faa83690cc" />
