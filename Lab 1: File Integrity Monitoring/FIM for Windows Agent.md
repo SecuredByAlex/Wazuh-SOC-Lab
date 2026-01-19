@@ -1,5 +1,5 @@
-# 📂 Lab 1: File Integrity Monitoring (Kali Linux Agent)
-*Goal:* Detect unauthorized file creation, modification, or deletion in the /root directory in real-time.
+# 📂 Lab 1: File Integrity Monitoring (Windows Agent)
+*Goal:* Detect unauthorized file creation on the Administrator's Desktop in real-time.
 
 ---
 
@@ -42,33 +42,26 @@ Before configuring the agent, ensure the FIM module (syscheck) is enabled on the
 
 ---
 
-## 🔹 Part 2: Agent Configuration (Kali Linux)
-Configure the specific directory we want to monitor.
+## 🔹 Part 2: Agent Configuration (Windows 10)
+Configure the Windows Agent to watch a specific user folder.
 
-1.  *Access the Kali Agent* terminal.
-2.  *Edit the Agent Configuration:*
-    
-    ```bash
-    sudo nano /var/ossec/etc/ossec.conf
-    ```
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/5862738e-afc2-482d-bab9-765962bd4ba4" />
-    
+1.  *Open Notepad as Administrator:*
+    * Search for "Notepad" -> Right Click -> *Run as Administrator*.
+2.  *Open the Config File:*
+    * File > Open.
+    * Path: C:\Program Files (x86)\ossec-agent\ossec.conf.
+    * Tip: Change the file type dropdown from "Text Documents" to "All Files" to see the .conf file.
 3.  *Add the Directory to Monitor:*
-    * Find the syscheck block.
-    * Add the following line to monitor the /root directory with real-time reporting:
+    * Locate the <syscheck> section.
+    * Add the line below (Replace YourUserName with your actual Windows user, e.g., Admin):
+    xml
+    <directories check_all="yes" report_changes="yes" realtime="yes">C:\File Integrity</directories>
     
-    ```bash
-    <directories check_all="yes" report_changes="yes" realtime="yes">/root</directories>
-    ```
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/4c85759a-15e7-4663-9237-c49ef117d2cd" />
+4.  *Save the file.*
+5.  *Restart the Wazuh Service:*
+    * Open Wazuh Agent -> Manage Tab -> Restart
     
-4.  *Save the file* (Ctrl+O, Enter, Ctrl+X).
-5.  *Restart the Agent* to apply changes:
     
-    ```bash
-    sudo systemctl restart wazuh-agent
-    ```
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/f5dc3b39-8ac9-490e-a807-1cfde41ff702" />
 
 ---
 
@@ -76,18 +69,13 @@ Configure the specific directory we want to monitor.
 Trigger the alert and verify it on the Dashboard.
 
 1.  *Trigger the Event:*
-    * On the Kali terminal, create a new "malicious" file in the monitored directory:
-    ```bash
-    sudo touch /root/malicious_backdoor.sh
-    ```
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/e2c0b751-a460-451c-b486-39d36f3be1ec" />
-    
+    * Go to your File integrity Folder.
+    * Right-click > New > *Text Document*.
+    * Name it: stolen_passwords.txt.
 2.  *Check Wazuh Dashboard:*
     * Navigate to *Modules > Security Events*.
-    * Search for *Rule ID: 554* (File added to the system).
+    * Search for *Rule ID: 554* (File added).
     * *Result:* You should see an alert with the description:
         > *"File added to the system"*
-        > * *File:* /root/malicious_backdoor.sh
-        > * *Agent:* Kali-Linux
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/c78fef10-e9cb-44ab-8196-7dd776766317" />
-        
+        > * *File:* C:\Users\YourUserName\Desktop\stolen_passwords.txt
+        > * *Agent:* Windows-10-Agent
