@@ -58,21 +58,23 @@ sudo systemctl restart suricata
 ### Step B: Configure Wazuh Agent
 
 1.  *Edit Agent Config:*
-    bash
+    ```bash
     sudo nano /var/ossec/etc/ossec.conf
-    
+    ```
+
 2.  *Add Log Collection Block:*
     * Add this block inside the <ossec_config> section to read Suricata's EVE JSON log:
-    xml
+    ```bash
     <localfile>
       <log_format>json</log_format>
       <location>/var/log/suricata/eve.json</location>
     </localfile>
+    ```
     
 3.  *Restart Wazuh Agent:*
-    bash
+    ```bash
     sudo systemctl restart wazuh-agent
-    
+    ```
 
 ---
 
