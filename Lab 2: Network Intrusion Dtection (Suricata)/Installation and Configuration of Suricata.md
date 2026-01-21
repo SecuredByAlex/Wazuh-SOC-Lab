@@ -70,11 +70,13 @@ sudo systemctl restart suricata
       <location>/var/log/suricata/eve.json</location>
     </localfile>
     ```
+  <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/02719530-9b9e-4568-bd27-574ed3dac0d5" />
     
 3.  *Restart Wazuh Agent:*
     ```bash
     sudo systemctl restart wazuh-agent
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/32314d7f-3a56-435e-b061-276f48ad3bda" />
 
 ---
 
