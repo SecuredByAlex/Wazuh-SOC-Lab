@@ -13,6 +13,7 @@ sudo add-apt-repository ppa:oisf/suricata-stable
 sudo apt-get update
 sudo apt-get install suricata -y
 ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/ed9fa8a6-5ab3-4b8c-b905-1da2e6760c56" />
 
 2. Download and extract the Emerging Threats Suricata ruleset:
 ```bash
@@ -20,6 +21,7 @@ cd /tmp/ && curl -LO https://rules.emergingthreats.net/open/suricata-6.0.8/emerg
 sudo tar -xvzf emerging.rules.tar.gz && sudo mv rules/*.rules /etc/suricata/rules/
 sudo chmod 640 /etc/suricata/rules/*.rules
 ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/53355df7-4972-47e1-85bf-73d06ce584cc" />
 
 3. Modify Suricata settings in the /etc/suricata/suricata.yaml file and set the following variables:
 ```bash
@@ -27,7 +29,7 @@ sudo nano /etc/suricata/suricata.yaml
 ```
 
 ```JavaScript
-HOME_NET: "<UBUNTU_IP>"
+HOME_NET: "10.0.2.15"
 EXTERNAL_NET: "any"
 
 default-rule-path: /etc/suricata/rules
@@ -42,13 +44,19 @@ enabled: Yes
 af-packet:
   - interface: eth0
 ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/bec1d17d-857f-48bd-b5d8-494f43f0416c" /><br>
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/ae2244b9-0b7c-4c66-9c00-d2a79691961f" /><br>
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/fdfe1f46-783a-4802-a1ca-611e81a0c5ac" /><br>
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/bad08b7f-b553-4bc3-ac13-5f7c24cfb5c2" /><br>
 
 4. Restart the Suricata service:
 ```bash
 sudo systemctl restart suricata
 ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/dad2b40b-4818-4d3d-9813-7af9c14743ad" />
 
 ### Step B: Configure Wazuh Agent
+
 1.  *Edit Agent Config:*
     bash
     sudo nano /var/ossec/etc/ossec.conf
