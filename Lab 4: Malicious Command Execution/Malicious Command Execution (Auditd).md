@@ -12,6 +12,7 @@ Install Auditd and configure the Wazuh Agent to forward the logs.
     ```bash
     sudo apt install auditd -y
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/1c89e9c7-48f7-4f57-8738-13baf89a8499" />
 
 2.  *Verify the Log File:*
     Ensure the log file exists (this is where auditd stores events):
@@ -24,6 +25,7 @@ Install Auditd and configure the Wazuh Agent to forward the logs.
     ```bash
     sudo nano /var/ossec/etc/ossec.conf
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/e46be987-966a-41bd-928d-8b0aef86a8ee" />
 
 2.  *Add Log Collection Block:*
     Check if the <localfile> block for audit.log exists. If not, add this block inside the <ossec_config> section:
@@ -33,11 +35,13 @@ Install Auditd and configure the Wazuh Agent to forward the logs.
       <location>/var/log/audit/audit.log</location>
     </localfile>
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/9ebe93ea-b16d-43e0-9626-a61ab625c3ad" />
 
 3.  *Restart Wazuh Agent:*
     ```bash
     sudo systemctl restart wazuh-agent
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/276a6a82-0882-4abf-825b-fa02cdd83ba1" />
 
 ---
 
@@ -63,14 +67,14 @@ Configure Auditd to watch for specific "Hacker Behavior" (e.g., commands run by 
     ```bash
     -a always,exit -F arch=b64 -F euid=0 -S execve -k audit-wazuh-c
     ```
-
-
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/d335abe3-12e6-4169-861a-f7fdc0ad2b3c" />
 
 3.  *Verify Rules:*
     Check if the rules are active:
-   ```bash
+    ```bash
     sudo auditctl -l
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/d97fff73-fd52-45a2-bd27-875737f63e54" />
 
 ---
 
@@ -83,10 +87,13 @@ Simulate a malicious command and check the dashboard.
     ```bash
     sudo netstat -tulpn
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/58d0fbdb-90b9-4d51-bae9-c456ae5fe1e0" />
 
 2.  *Check Wazuh Dashboard:*
     * Navigate to *Discover*.
     * Search for *"audit"* or filter by rule.groups: audit.
-    * *Result:
+    * *Result:*
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/d0527ccc-66a0-48b9-8b40-fac3795ec8e8" />
+
 
     
