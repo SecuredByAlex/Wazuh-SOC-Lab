@@ -22,6 +22,7 @@ Configure the Active Response module to trigger a firewall drop when an attack i
       <timeout_allowed>yes</timeout_allowed>
     </command>
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/f4758023-93ba-4fef-907f-99e0798f171f" />
 
 ### Step B: Configure Active Response
 1.  *Add the Response Block:*
@@ -35,6 +36,7 @@ Configure the Active Response module to trigger a firewall drop when an attack i
       <timeout>180</timeout>
     </active-response>
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/c19fef67-f389-4aa7-b179-3bc36412ea21" />
 
 2.  *Save & Restart:*
     * Save the file (Ctrl+O, Enter, Ctrl+X).
@@ -42,6 +44,7 @@ Configure the Active Response module to trigger a firewall drop when an attack i
         ```bash
         sudo systemctl restart wazuh-manager
         ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/da0e9d67-588e-4572-806e-1c7fb25ad273" />
 
 ---
 
@@ -53,6 +56,7 @@ Use Hydra to simulate a brute force attack against the Ubuntu Agent.
     ```bash
     sudo apt install hydra -y
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/338ff3ae-709d-4aa4-a800-7f87ff279d51" />
 
 2.  *Launch the Attack:*
     Run the following command to try multiple passwords against the Wazuh Manager (or Agent).
@@ -64,6 +68,8 @@ Use Hydra to simulate a brute force attack against the Ubuntu Agent.
     ```
     (Note: You can also use a small custom text file with random passwords if rockyou.txt is too large).
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/6a9afb17-456f-4dc3-938e-187cde12b8f5" />
+
 ---
 
 ## 🔹 Part 3: Verification & Results
@@ -72,11 +78,13 @@ Verify that Wazuh detected the attack and blocked the IP.
 1.  *Check Wazuh Dashboard:*
     * Navigate to *Modules > Security Events*.
     * Search for *Rule ID: 5763* or text *"Host blocked by firewall-drop"*.
+  
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/6c996b28-2d59-47bf-a3dc-55fcf05ed733" />
 
 2.  *Confirm the Block:*
     * *Alert 1:* You should see multiple alerts for "SSHD brute force trying to get access to the system" (Rule 5763).
     * *Alert 2:* You should see an Active Response alert: "Host blocked by firewall-drop".
 
-3.  *Verify Connectivity Loss:*
-    * From your Kali machine, try to ping the Target IP.
-    * It should *fail* (Request Timed Out) for 180 seconds, proving the firewall rule is active.
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/920048b2-26d9-4f09-830d-c59ebcb94dd5" /><br>
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/3f0e06d9-2645-4a4d-a018-d37fc4b5fba4" />
+
