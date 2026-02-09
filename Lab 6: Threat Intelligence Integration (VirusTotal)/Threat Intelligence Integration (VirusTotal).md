@@ -10,6 +10,8 @@
 2.  **Get Key:** Click your profile icon (top right) > **API Key**.
 3.  **Copy:** Copy your alphanumeric `API Key`.
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/9375462d-e29e-46f0-b85a-1278ce59065f" />
+
 ---
 
 ## 🔹 Part 2: Create a Custom Rule (Wazuh Manager)
@@ -33,6 +35,8 @@
     ```
     * **Logic:** If FIM detects a file addition (Rule 554) **AND** the file path is `/root`, trigger Rule 100200.
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/8bcfe1f4-e028-47e7-a08a-3c5faa68a8f4" />
+
 3.  **Save & Exit:** (`Ctrl+O`, `Enter`, `Ctrl+X`).
 
 ---
@@ -47,7 +51,7 @@
 
 2.  **Add Integration Block:**
     Scroll to the bottom (outside any other block) and paste this.
-    * ⚠️ **Replace `<YOUR_VT_API_KEY>` : "61bf55d83c68fc865eb0ae923f37d2627dc1887ea77959939366560ebb8470d8" with your actual key.**
+    * ⚠️ **Replace `<YOUR_VT_API_KEY>` : `61bf55d83c68fc865eb0ae923f37d2627dc1887ea77959939366560ebb8470d8` with your actual key.** <br>
     
 
     ```xml
@@ -58,11 +62,13 @@
       <alert_format>json</alert_format>
     </integration>
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/e4fb087c-4216-48ea-9a24-c59db4686288" />
 
 3.  **Restart Manager:**
     ```bash
     sudo systemctl restart wazuh-manager
     ```
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/86ec750e-2343-4e16-8def-ddc5dd96852a" />
 
 ---
 
@@ -77,15 +83,16 @@
     ```
     *(Note: The FIM system might take a few seconds to detect the file creation).*
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/b5f6a977-1031-4072-80aa-eac95b6c6825" /><br>
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/43c4062f-bda9-4e24-b803-13c860f03750" />
+
 ---
 
 ## 🔹 Part 5: Verification & Results
 *Verify that Wazuh detected the file and flagged it as malware.*
 
-1.  **Check Wazuh Dashboard:**
+ **Check Wazuh Dashboard:**
     * Navigate to **Modules > Security Events**.
     * Search for **"virustotal"**.
 
-2.  **Analyze the Alert:**
-    * You should see an alert: **"VirusTotal: Alert - secure.eicar.org - Eicar-Test-Signature"**.
-    * Expand the alert to see the **VirusTotal link**, which confirms the file hash is known malware.
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/aab6a3d6-ad39-4fca-be6a-437e48edf163" />
