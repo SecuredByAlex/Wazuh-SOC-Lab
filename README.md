@@ -1,6 +1,6 @@
 # 🛡️Wazuh SIEM SOC Home Lab
 Windows + Kali + Ubuntu Server<br>
-Threat Detection | Sysmon | Sigma Rules | Attack Simulation
+
 
 ## 📌 Project Overview
 This project demonstrates how a SOC Analyst builds, configures, and uses a SIEM (Wazuh) to detect security events. The lab consists of a Wazuh server on Ubuntu, and two monitored endpoints: a Windows 10 VM and a Kali Linux VM. The goal of the project is to simulate attacks, collect logs and generate SOC-style incident reports.
