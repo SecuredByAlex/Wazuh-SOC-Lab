@@ -51,13 +51,13 @@
 
 2.  **Add Integration Block:**
     Scroll to the bottom (outside any other block) and paste this.
-    * ⚠️ **Replace `<YOUR_VT_API_KEY>` : `61bf55d83c68fc865eb0ae923f37d2627dc1887ea77959939366560ebb8470d8` with your actual key.** <br>
+    * ⚠️ **Replace `<YOUR_VT_API_KEY>` :  with your actual key.** <br>
     
 
     ```xml
     <integration>
       <name>virustotal</name>
-      <api_key>61bf55d83c68fc865eb0ae923f37d2627dc1887ea77959939366560ebb8470d8</api_key>
+      <api_key><YOUR_VT_API_KEY></api_key>
       <rule_id>100200</rule_id>
       <alert_format>json</alert_format>
     </integration>
