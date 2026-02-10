@@ -81,19 +81,20 @@ sudo systemctl restart suricata
 ---
 
 ## 🔹 Part 2: Verification & Results
-Simulate a network scan to trigger the alert.
+*Simulate a malicious network signature to trigger the IDS.*
 
-1.  *Trigger the Event (Attack):*
-    * You need to scan the Kali machine from another device (e.g., your Windows VM or Host Machine).
-    * If you don't have a second machine, you can try scanning localhost from Kali itself, though external scans are better.
-    * *Command (from attacker):*
-    bash
-    nmap -A -sS -p- <KALI_IP_ADDRESS>
-    
-2.  *Check Wazuh Dashboard:*
-    * Navigate to *Modules > Security Events*.
-    * Search for *"suricata"* or *Rule ID: 86601*.
-    * *Result:* You should see alerts describing the traffic, such as:
-        > *"Suricata: ET OPEN Scanning"*
-        > * *Source:* Attacker IP
-        > * *Destination:* Kali IP
+1.  **Trigger the Event:**
+    * On the Kali machine (the one running Suricata), run a command to download a fake malicious artifact. This specific URL returns a response that looks like a successful root compromise (`uid=0(root)`), which triggers a high-severity IDS rule.
+    ```bash
+    curl http://testmyids.com
+    ```
+<img width="1920" height="1032" alt="Image" src="https://github.com/user-attachments/assets/e6065353-34f5-4a79-90a9-dd74649f2782" />
+
+2.  **Check Wazuh Dashboard:**
+    * Navigate to **Modules > Security Events**.
+    * Filter by `rule.groups: suricata`.
+    * **Result:** You should see a critical alert indicating a potential system compromise.
+    * **Alert Name:** `Suricata: Alert - GPL ATTACK_RESPONSE id check returned root`
+<img width="1920" height="1032" alt="Image" src="https://github.com/user-attachments/assets/ab8ca546-ef26-4b6d-bf94-1204c9b7a37f" />
+
+
